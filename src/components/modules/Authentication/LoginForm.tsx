@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -25,13 +26,25 @@ export function LoginForm({
     try {
       const res = await login(data).unwrap();
       console.log(res);
+       if (res.success) {
+        toast.success("Logged in successfully");
+        navigate("/");
+      }
     } catch (err) {
       console.error(err);
+       if (err.data.message === "Incorret password") {
+        toast.error("Invalid credentials");
+      }
 
-      if (err.status === 401) {
+      if (err.data.message === "User does not verfied") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: data.email });
       }
+
+      // if (err.status === 400) {
+      //   toast.error("Your account is not verified");
+      //   navigate("/verify", { state: data.email });
+      // }
     }
   };
 
@@ -96,6 +109,7 @@ export function LoginForm({
         </div>
 
         <Button
+          onClick={() => window.open(`${config.baseUrl}/auth/google`)}
           type="button"
           variant="outline"
           className="w-full cursor-pointer"
