@@ -1,7 +1,9 @@
+import { AddDivisionModal } from "@/components/modules/admin/Division/AddDivisionModal";
+
  export default function AddDivision() {
   return (
     <div>
-  <h1>this is division layout</h1>
+  <AddDivisionModal />
     </div>
   );
 }
