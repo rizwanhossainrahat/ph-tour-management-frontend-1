@@ -17,10 +17,11 @@ import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/a
 import { useAppDispatch } from "@/redux/hook";
 import { role } from "@/constants/role";
 
-// Navigation links array to be used in both desktop and mobile menus
+
 const navigationLinks = [
   { href: "/", label: "Home", role:"PUBLIC"},
   { href: "/about", label: "About" ,role:"PUBLIC"},
+   { href: "/tours", label: "Tours", role: "PUBLIC" },
   { href: "/admin", label: "Dashboard" ,role:role.admin},
   { href: "/admin", label: "Dashboard" ,role:role.superAdmin},
   { href: "/user", label: "Dashboard" ,role:role.user},
@@ -31,7 +32,6 @@ export default function Navbar() {
   const {data}=useUserInfoQuery(undefined)
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
-  console.log(data?.data?.email);
 
     const handleLogout = async () => {
     await logout(undefined);
